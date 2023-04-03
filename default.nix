@@ -82,7 +82,7 @@ rec {
     name = "${pname}-${version}";
     src = ./.;
     propagatedBuildInputs = pythonDeps;
-    checkInputs = with python_machnix.pkgs; [ pytestCheckHook ];
+    #checkInputs = with python_machnix.pkgs; [ pytestCheckHook ];
     # these tests are expensive and therefore only executed in CI via flakes app 'tests-unit'
     disabledTests = [
       "test_parse_all_pypi_reqs"

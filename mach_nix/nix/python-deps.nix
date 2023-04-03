@@ -1,13 +1,5 @@
 {python, fetchurl, ...}:
 rec {
-  distlib = python.pkgs.buildPythonPackage {
-    name = "distlib-0.3.3";
-    src = fetchurl {
-      url = "https://files.pythonhosted.org/packages/56/ed/9c876a62efda9901863e2cc8825a13a7fcbda75b4b498103a4286ab1653b/distlib-0.3.3.zip";
-      sha256 = "01bbw4gm64fvdnlylqhsy3fhxs4yjhfnk3pcwassmspn3xsx10nr";
-    };
-    doCheck = false;
-  };
   resolvelib = python.pkgs.buildPythonPackage {
     name = "resolvelib-0.8.1";
     src = fetchurl {
@@ -24,9 +16,25 @@ rec {
     };
     doCheck = false;
   };
+  packaging = python.pkgs.buildPythonPackage {
+    name = "packaging-21.3";
+    src = fetchurl {
+      url = "https://files.pythonhosted.org/packages/df/9e/d1a7217f69310c1db8fdf8ab396229f55a699ce34a203691794c5d1cad0c/packaging-21.3.tar.gz";
+      sha256 = "dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb";
+    };
+    propagatedBuildInputs = [ python.pkgs.pyparsing ];
+    doCheck = false;
+  };
 
+  pytest = python.pkgs.pytest.override {
+    inherit packaging;
+    setuptools-scm = python.pkgs.setuptools-scm.override {
+      inherit packaging;
+    };
+  };
+
+  distlib = python.pkgs.distlib;
   networkx = python.pkgs.networkx;
-  packaging = python.pkgs.packaging;
   setuptools = python.pkgs.setuptools;
   toml = python.pkgs.toml;
   wheel = python.pkgs.wheel;
